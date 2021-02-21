@@ -1,6 +1,6 @@
 # zler-wechat-sdk
 
-An API extension for WeChat client sdk
+An API extension for biz
 
 # install
 
