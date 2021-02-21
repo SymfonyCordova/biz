@@ -1,0 +1,29 @@
+{
+    "name": "zler/biz",
+    "description": "biz service dao",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "SymfonyCordova",
+            "email": "978451251@qq.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Zler\\Biz\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "tests/"
+        }
+    },
+    "require": {
+        "doctrine/dbal": "^3.0",
+        "pimple/pimple": "^3.3"
+    },
+    "require-dev": {
+        "symfony/doctrine-bridge": "^5.2"
+    }
+}
