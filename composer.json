@@ -25,5 +25,12 @@
     },
     "require-dev": {
         "symfony/doctrine-bridge": "^5.2"
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Zler\\Biz\\Laravel\\Provider\\LaravelServiceProvider"
+            ]
+        }
     }
 }
