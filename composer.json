@@ -20,7 +20,7 @@
         }
     },
     "require": {
-        "doctrine/dbal": "^3.0",
+        "doctrine/dbal": "^2.12.1",
         "pimple/pimple": "^3.3"
     },
     "require-dev": {
