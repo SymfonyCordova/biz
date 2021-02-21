@@ -2,27 +2,27 @@
 return [
      'options' => [
         'db.options' => [
-            'dbname' => getenv('DB_DATABASE', ''),
-            'user' => getenv('DB_USERNAME',''),
-            'password' => getenv('DB_PASSWORD', '') ,
-            'host' => getenv('DB_HOST', '127.0.0.1'),
-            'port' => getenv('DB_PORT', '3306'),
+            'dbname' => env('DB_DATABASE', ''),
+            'user' => env('DB_USERNAME',''),
+            'password' => env('DB_PASSWORD', '') ,
+            'host' => env('DB_HOST', '127.0.0.1'),
+            'port' => env('DB_PORT', '3306'),
             'driver' => 'pdo_mysql',
             'charset' => 'utf8',
         ],
         'wechat.options' => [
             'gzh' => [
-                'app_id' => getenv('gzh_app_id',''),
-                'app_secret' => getenv('gzh_app_secret', ''),
-                'token' => getenv('gzh_token', ''),
+                'app_id' => env('gzh_app_id',''),
+                'app_secret' => env('gzh_app_secret', ''),
+                'token' => env('gzh_token', ''),
             ],
             'miniprograme' => [
-                'app_id' => getenv('miniprograme_app_id', ''),
-                'app_secret' => getenv('miniprograme_app_secret', ''),
+                'app_id' => env('miniprograme_app_id', ''),
+                'app_secret' => env('miniprograme_app_secret', ''),
             ],
             'pc' => [
-                'app_id' => getenv('', ''),
-                'app_secret' => getenv('', ''),
+                'app_id' => env('', ''),
+                'app_secret' => env('', ''),
             ]
         ]
     ]
