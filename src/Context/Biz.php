@@ -19,19 +19,21 @@ class Biz extends Container
 
         $biz = $this;
 
+        $this['autoload.aliases'] = new \ArrayObject(array('' => 'Biz'));
+
         $this['dao.serializer'] = function () {
             return new FieldSerializer();
         };
 
-        $biz['autoload.object_maker.service'] = function ($biz) {
+        $this['autoload.object_maker.service'] = function ($biz) {
             return function ($namespace, $name) use ($biz) {
-                $className = "{$namespace}\\Service\\Impl\\{$name}Impl";
+                $class = "{$namespace}\\Service\\Impl\\{$name}Impl";
 
-                return new $className($biz);
+                return new $class($biz);
             };
         };
 
-        $biz['autoload.object_maker.dao'] = function ($biz) {
+        $this['autoload.object_maker.dao'] = function ($biz) {
             return function ($namespace, $name) use ($biz) {
                 $class = "{$namespace}\\Dao\\Impl\\{$name}Impl";
 
@@ -39,26 +41,20 @@ class Biz extends Container
             };
         };
 
-        $biz['autoloader'] = array(
-            'service' => $this['autoload.object_maker.service'],
-            'dao' => $this['autoload.object_maker.dao']
-        );
+        $this['autoloader'] = function ($biz) {
+            return new ContainerAutoloader(
+                $biz,
+                $biz['autoload.aliases'],
+                array(
+                    'service' => $biz['autoload.object_maker.service'],
+                    'dao' => $biz['autoload.object_maker.dao'],
+                )
+            );
+        };
 
         foreach ($values as $key => $value) {
             $this->offsetSet($key, $value);
         }
-    }
-
-    protected function autoload($props, $alias){
-        $parts = explode(":", $alias);
-
-        if(empty($parts)){
-            throw new \InvalidArgumentException("Service alias parameter is invalid.");
-        }
-
-        $obj = $this['autoloader'][$props]($parts[0], $parts[1]);
-
-        return $obj;
     }
 
     public function register(ServiceProviderInterface $provider, array $values = array())
@@ -72,12 +68,12 @@ class Biz extends Container
 
     public function service($alias)
     {
-        return $this->autoload('service', $alias);
+        return $this['autoloader']->autoload('service', $alias);
     }
 
     public function dao($alias)
     {
-        return $this->autoload('dao', $alias);
+        return $this['autoloader']->autoload('dao', $alias);
     }
 
 }
