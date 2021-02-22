@@ -135,7 +135,7 @@ class ScaffoldCommand extends Command
     protected function initPaths()
     {
         //$rootDirectory = preg_replace("/\\\/","/", app_path());
-        $rootDirectory = base_path('biz');
+        $rootDirectory = base_path().'/biz';
 
         $tpl = __DIR__.'/Template';
         $dao = $rootDirectory.'/'.$this->names['moduleName'].'/Dao';
