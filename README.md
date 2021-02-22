@@ -17,6 +17,198 @@ An API extension for biz
   ```
 
 
+# 概述
+
+Biz定位为简单、易用的**业务层**框架，采用经典的 Service/Dao 模式来编写项目的业务逻辑，可以跟 Symfony、Laravel、Silex、Lumen、Phalcon 等框架搭配使用。
+
+Biz Framework 的目标，给出一套组织业务代码的约定以及最佳实践，以让一些通用的模块的业务代码，能跨项目、跨 Web 开发框架的重用。使用 Biz  能给团队带来的好处有：
+
+- 提高生产效率，减少重复开发。
+- 能保证一些通用模块的质量，一些通用模块往往经过各个项目不断的锤炼，会有较高的质量。
+- 方便团队各 Team 之间人员流动，因为大家都采用了一致的业务层框架，很容易就能上手新项目。
+
+## 开发示例
+
+### 目录结构
+
+以下为含 `User`, `Article` 两个业务模块的推荐的目录结构示例：
+
+```
+src/
+  Biz/
+    User/
+      Dao/
+        Impl/
+          UserDaoImpl.php
+        UserDao.php
+      Service/
+        Impl/
+          UserServiceImpl.php
+        UserService.php
+    Article
+      Dao/
+        Impl/
+          ArticleDaoImpl.php
+          CategoryDaoImpl.php
+        ArticleDao.php
+        CategoryDao.php
+      Service/
+        Impl/
+          ArticleServiceImpl.php
+        ArticleService.php
+```
+
+### 命名约定
+
+- 约定应用级业务层的顶级命名空间为 `Biz`，命名空间的第二级为模块名；
+- 约定 *Service 接口*的接口名以 Service 作为后缀，命名空间为 `Biz\模块名\Service`, 上述例子中 `UserService` 的完整类名为 `Biz\User\Service\UserService`；
+- 约定 *Service 实现类*的类名以 ServiceImpl 作为后缀，命名空间为 `Biz\模块名\Service\Impl`, 上述例子中 `UserServiceImpl` 的完整类名为 `Biz\User\Service\Impl\UserServiceImpl`；
+- Dao 接口、类名的命名约定，同 Sevice 接口、类名的命名约定。
+
+### 创建数据库
+
+在编写业务代码之前，我们首先需要创建数据库
+
+### 编写Dao
+
+以编写 User Dao 为例，我们首先需要创建 `UserDao接口`：
+
+```php
+<?php
+namespace Biz\User\Dao;
+
+use Zler\Biz\Dao\GeneralDaoInterface;
+
+interface UserDao extends GeneralDaoInterface
+{
+
+}
+```
+
+这里我们直接继承了`GeneralDaoInterface`，在 `GeneralDaoInterface` 中，我们声明了常用的 Dao 接口：
+
+```php
+<?php
+use Zler\Biz\Dao\GeneralDaoInterface;
+
+interface GeneralDaoInterface extends DaoInterface
+{
+    public function create($fields);
+
+    public function update($id, array $fields);
+
+    public function delete($id);
+
+    public function get($id);
+
+    public function search($conditions, $orderBy, $start, $limit);
+
+    public function count($conditions);
+
+    public function wave(array $ids, array $diffs);
+}
+```
+
+同样我们的 UserDao 实现类，也可继承自 `Zler\Biz\Dao\GeneralDaoImp`l;
+
+```php
+<?php
+namespace Biz\User\Dao\Impl;
+
+use Biz\User\Dao\UserDao;
+use Zler\Biz\Dao\GeneralDaoImpl;
+
+class UserDaoImpl extends GeneralDaoImpl implements UserDao
+{
+    protected $table = 'user';
+
+    public function declares()
+    {
+        return array(
+            'timestamps' => array('created_time', 'update_time'),
+            'serializes' => array(),
+            'orderbys' => array(),
+            'conditions' => array(
+                'username = :username',
+            ),
+        );
+    }
+}
+```
+
+这样我们就拥有了 `GeneralDaoInterface` 接口所定义的所有方法功能。关于方法 `declares()` 的详细说明参考DAO章节
+
+### 编写Service
+
+以编写 UserService 为例，我们首先需创建 `UserService` 接口：
+
+```php
+<?php
+namespace Biz\User\Service;
+
+interface UserService
+{
+    public function getUser($id);
+
+    // ...
+}
+```
+
+然后创建 User Service 的实现类：
+
+```php
+<?php
+namespace Biz\User\Service\Impl;
+
+use Zler\Biz\Service\BaseService
+use Biz\User\Service\UserService;
+
+class UserServiceImpl extends BaseService implements UserService
+{
+    public function getUser($id)
+    {
+        return $this->getUserDao()->get($id);
+    }
+
+    // ...
+
+    protected function getUserDao()
+    {
+        return $this->biz->dao('User:UserDao');
+    }
+}
+```
+
+这里我们 `UserServiceImpl` 继承了 `Zler\Biz\Service\BaseService` ，使得 `UserServiceImpl` 可以自动被注入`Biz`容器对象。
+
+在 `getUserDao()` 方法中，我们通过 `$this->biz->dao('User:UserDao')`，获得了 User Dao 对象实例`Biz\User\Dao\Impl\UserDaoImpl`，具体参见 [获取 Dao / Service 的实例对象](http://developer.edusoho.com/biz-framework/biz-framework-container.html)。
+
+### 使用Service
+
+以实现*显示用户的个人主页*为例，我们的 `Controller` 代码大致为：
+
+```php
+<?php
+
+class UserController
+{
+    public function show($id)
+    {
+        $user = $this->getUserService()->getUser($id);
+        // ...
+        return $this->render('user', array('user' => $user));
+    }
+    // ...
+
+    protected function getUserService()
+    {
+        return $this->biz->service('User:UserService');
+    }
+}
+```
+
+其中 `getUserService()` 同上个例子中的 `getUserDao()` 原理类似，通过调用 `getUserService()` 我们获得了`Biz\User\Service\Impl\UserServiceImpl` 对象实例。
+
 # DAO
 
 DAO(Data Access Object) 即数据访问对象，封装所有对数据源进行操作的 API。以数据库驱动的应用程序为例，通常数据库中的一张表，对应的会有一个 Dao 类去操作这个数据库表。
