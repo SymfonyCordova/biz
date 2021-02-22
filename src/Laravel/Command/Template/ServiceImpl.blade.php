@@ -41,7 +41,7 @@ class {{$bigName}}ServiceImpl extends BaseService implements {{$bigName}}Service
 
     public function find{{$bigPluralName}}ByIds($ids)
     {
-        //return ArrayToolkit::index($this->get{{$bigName}}Dao()->findByIds($ids), 'id');
+        return ArrayToolkit::index($this->get{{$bigName}}Dao()->findByIds($ids), 'id');
     }
 
     public function search{{$bigPluralName}}($conditions, $orderBy, $start = 0, $limit = 15)
@@ -60,7 +60,7 @@ class {{$bigName}}ServiceImpl extends BaseService implements {{$bigName}}Service
         );
 
         if(!ArrayToolkit::requires($fields, $requiredFields)){
-        throw new InvalidArgumentException(sprintf('Missing required fields where creating {{$bigName}}#%s', json_encode($fields)));
+            throw $this->createServiceException('xxx不存在');
         }
 
         $default = array(
@@ -69,14 +69,6 @@ class {{$bigName}}ServiceImpl extends BaseService implements {{$bigName}}Service
 
         $fields = ArrayToolkit::parts($fields, array_merge($requiredFields, array_keys($default)));
         $fields = array_merge($default, $fields);
-
-        return $fields;
-        }
-
-        private function filterUpdate{{$bigName}}Fields($fields){
-        $fields =  ArrayToolkit::parts($fields, array(
-        {!! $tableFields !!}
-        ));
 
         return $fields;
     }
@@ -88,7 +80,6 @@ class {{$bigName}}ServiceImpl extends BaseService implements {{$bigName}}Service
 
         return $fields;
     }
-
 
     /**
     * @return {{$bigName}}Dao
