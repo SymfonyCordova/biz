@@ -22,7 +22,7 @@
     "require": {
         "doctrine/dbal": "^2.12.1",
         "pimple/pimple": "^3.3",
-        "symfony/filesystem": "^5.2"
+        "symfony/filesystem": "^4.4.19"
     },
     "require-dev": {
         "symfony/doctrine-bridge": "^5.2"
