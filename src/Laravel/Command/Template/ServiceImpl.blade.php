@@ -3,7 +3,7 @@ namespace Biz\{{$moduleName}}\Service\Impl;
 
 use Biz\{{$moduleName}}\Dao\{{$bigName}}Dao;
 use Biz\{{$moduleName}}\Service\{{$bigName}}Service;
-use Biz\Common\BaseService;
+use Zler\Biz\Service\BaseService
 use Zler\Biz\Laravel\Common\ArrayToolkit;
 
 class {{$bigName}}ServiceImpl extends BaseService implements {{$bigName}}Service
