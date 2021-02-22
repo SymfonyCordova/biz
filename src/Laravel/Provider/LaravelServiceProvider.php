@@ -35,6 +35,12 @@ class LaravelServiceProvider extends ServiceProvider implements DeferrableProvid
             __DIR__ . '/../config/zler-biz.php' => config_path('zler-biz.php'),
         ]);
 
+        if ($this->app->runningInConsole()) {
+            $this->commands([
+                \Zler\Biz\Laravel\Command\ScaffoldCommand::class,
+            ]);
+        }
+
         //$this->loadRoutesFrom(__DIR__ . '/../../routes/routes.php');
 
         //$this->loadMigrationsFrom(__DIR__.'/path/to/migrations');
