@@ -6,9 +6,9 @@ namespace Zler\Biz\Laravel\Command;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
 use Symfony\Component\Filesystem\Filesystem;
-use Zler\Biz\Laravel\Common\StringToolkit;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Contracts\View\Factory as ViewFactory;
+use Zler\Biz\Common\StringToolkit;
 
 class ScaffoldCommand extends Command
 {

@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Zler\Biz\Laravel\Common;
+namespace Zler\Biz\Common;
 
 
 class StringToolkit
