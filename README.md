@@ -352,3 +352,5 @@ public function declares()
 | pickNamesByIds                    | 根据多个 `id` 获取 `name` 列数据       |
 | findByIds(array $ids)             | 根据多个 `id` 查询多行数据             |
 | findByType($type, $start, $limit) | 根据 `Type` 分页查询多行数据           |
+
+以上文档摘自 developer.edusoho.com/biz-framework/overview.html
