@@ -5,6 +5,6 @@ use Zler\Biz\Dao\GeneralDaoInterface;
 
 interface {{$bigName}}Dao extends GeneralDaoInterface
 {
-
+    public function findByIds($ids);
 }
 

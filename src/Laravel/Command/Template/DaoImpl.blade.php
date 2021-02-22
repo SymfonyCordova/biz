@@ -17,5 +17,10 @@ class {{$bigName}}DaoImpl extends GeneralDaoImpl implements {{$bigName}}Dao
             'conditions' => array(),
         );
     }
+
+    public function findByIds($ids)
+    {
+        return $this->findInField('id', $ids);
+    }
 }
 
