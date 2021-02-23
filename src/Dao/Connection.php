@@ -23,7 +23,7 @@ class Connection extends DoctrineConnection
         return parent::insert($tableExpression, $data, $types);
     }
 
-    private function addBackSlash($data)
+    public function addBackSlash($data)
     {
         $backSlashData = [];
         foreach ($data as $name => $value){
