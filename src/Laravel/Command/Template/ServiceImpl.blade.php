@@ -56,7 +56,7 @@ class {{$bigName}}ServiceImpl extends BaseService implements {{$bigName}}Service
 
     public function delete{{$bigName}}($id)
     {
-        return $this->getShareDao()->delete($id);
+        return $this->get{{$bigName}}Dao()->delete($id);
     }
 
     private function filterCreate{{$bigName}}Fields($fields){
