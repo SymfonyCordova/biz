@@ -18,7 +18,19 @@ class Connection extends DoctrineConnection
     {
         $this->checkFieldNames(array_keys($data));
 
+        $data = $this->addBackSlash($data);
+
         return parent::insert($tableExpression, $data, $types);
+    }
+
+    private function addBackSlash($data)
+    {
+        $backSlashData = [];
+        foreach ($data as $name => $value){
+            $name = '`'.$name.'`';
+            $backSlashData[$name] = $value;
+        }
+        return $backSlashData;
     }
 
     public function checkFieldNames($names)
