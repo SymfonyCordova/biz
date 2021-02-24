@@ -30,13 +30,7 @@ class {{$bigName}}ServiceImpl extends BaseService implements {{$bigName}}Service
 
         $fields = $this->filterUpdate{{$bigName}}Fields($fields);
 
-        $num = $this->get{{$bigName}}Dao()->update($id, $fields);
-
-        if(!$num){
-            throw $this->createServiceException('xxx不存在');
-        }
-
-        return $this->get{{$bigName}}($id);
+        return $this->get{{$bigName}}Dao()->update($id, $fields);
     }
 
     public function find{{$bigPluralName}}ByIds($ids)
