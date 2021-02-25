@@ -59,7 +59,7 @@ class {{$bigName}}ServiceImpl extends BaseService implements {{$bigName}}Service
         );
 
         if(!ArrayToolkit::requires($fields, $requiredFields)){
-            throw $this->createServiceException('xxx不存在');
+            throw $this->createServiceException('缺少必要参数，添加xxx失败');
         }
 
         $default = array(
