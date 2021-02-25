@@ -5,6 +5,7 @@ namespace Zler\Biz\Service;
 
 
 use Zler\Biz\Context\Biz;
+use Zler\Biz\Dao\Connection;
 use Zler\Biz\Service\Exception\AccessDeniedException;
 use Zler\Biz\Service\Exception\NotFoundException;
 use Zler\Biz\Service\Exception\ServiceException;
@@ -44,5 +45,30 @@ abstract class BaseService
     protected function createNotFoundException($message = 'Not Found')
     {
         return new NotFoundException($message);
+    }
+
+    /**
+     * @return Connection
+     */
+    protected function db()
+    {
+        $biz = $this->getBiz();
+
+        return $biz['db'];
+    }
+
+    protected function beginTransaction()
+    {
+        $this->db()->beginTransaction();
+    }
+
+    protected function commit()
+    {
+        $this->db()->commit();
+    }
+
+    protected function rollback()
+    {
+        $this->db()->rollBack();
     }
 }
