@@ -17,7 +17,7 @@ class Biz extends Container
     {
         parent::__construct($values);
 
-        $biz = $this;
+        $this['migration.directories'] = new \ArrayObject();
 
         $this['autoload.aliases'] = new \ArrayObject(array('' => 'Biz'));
 
