@@ -400,9 +400,9 @@ class MyEventSubscriber extends EventSubscriber implements EventSubscriberInterf
     public static function getSubscribedEvents()
     {
         return [
-            'review.create' => 'onReviewChange',
-            'review.update' => 'onReviewChange',
-            'review.delete' => 'onReviewChange',
+            'user.create' => 'onReviewChange',
+            'user.update' => 'onReviewChange',
+            'user.delete' => 'onReviewChange',
         ];
     }
 
@@ -434,14 +434,38 @@ class MyEventSubscriber extends EventSubscriber implements EventSubscriberInterf
         return $this->getBiz()->service('Course:CourseSetService');
     }
 }
-
-/*
-    user_user_event_subscriber:
-        class: Biz\User\Event\UserEventSubscriber
-        arguments: ['@biz']
-        public: true
-        tags:
-            - { name: codeages_plugin.event.subscriber }
-*/
 ```
 
+- 对与symfony 需要注册打上标签
+
+  ```yaml
+  user_user_event_subscriber:
+  	class: Biz\User\Event\UserEventSubscriber
+  	arguments: ['@biz']
+  	public: true
+  	tags:
+  		- { name: zler.event.subscriber }
+  ```
+
+- 对与laravel需要注册打上标签
+
+  ```php
+  $this->app->bind('SpeedReportEventSubscriber', function ($app) {
+      return new SpeedReportEventSubscriber($app['biz']);
+  });
+  
+  $this->app->bind('MemoryReportEventSubscriber', function () {
+      return new MemoryReportEventSubscriber($app['biz']);
+  });
+  
+  $this->app->tag(['SpeedReportEventSubscriber', 'MemoryReportEventSubscriber'], 'zler.event.subscriber');
+  ```
+
+- 在service中使用
+
+  ```php
+  $created = $this->getUserService()->get($id);
+  $this->dispatchEvent('user.create', new Event($created));
+  ```
+
+  
