@@ -5,6 +5,7 @@ namespace Zler\Biz\Laravel\Provider;
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Contracts\Support\DeferrableProvider;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Zler\Biz\Context\Biz;
 use Zler\Biz\Provider\DoctrineServiceProvider;
 
@@ -42,9 +43,32 @@ class LaravelServiceProvider extends ServiceProvider implements DeferrableProvid
             ]);
         }
 
+        foreach ($this->app->tagged('zler.event.subscriber') as $subscriber){
+            $this->getDispatcher()->addSubscriber($subscriber);
+        }
+        //$this->getDispatcher()->addSubscriber();
+
         //$this->loadRoutesFrom(__DIR__ . '/../../routes/routes.php');
 
         //$this->loadMigrationsFrom(__DIR__.'/path/to/migrations');
+    }
+
+    /**
+     * @return Biz
+     */
+    private function getBiz()
+    {
+        return $this->app->make(Biz::class);
+    }
+
+    /**
+     * @return EventDispatcherInterface
+     */
+    private function getDispatcher()
+    {
+        $biz = $this->getBiz();
+        
+        return $biz['dispatcher'];
     }
 
     /**

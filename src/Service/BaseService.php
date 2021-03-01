@@ -4,8 +4,10 @@
 namespace Zler\Biz\Service;
 
 
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Zler\Biz\Context\Biz;
 use Zler\Biz\Dao\Connection;
+use Zler\Biz\Event\Event;
 use Zler\Biz\Service\Exception\AccessDeniedException;
 use Zler\Biz\Service\Exception\NotFoundException;
 use Zler\Biz\Service\Exception\ServiceException;
@@ -45,6 +47,31 @@ abstract class BaseService
     protected function createNotFoundException($message = 'Not Found')
     {
         return new NotFoundException($message);
+    }
+
+    /**
+     * @return EventDispatcherInterface
+     */
+    private function getDispatcher()
+    {
+        return $this->biz['dispatcher'];
+    }
+
+    /**
+     * @param string $eventName
+     * @param Event|mixed $subject
+     * @param array $arguments
+     * @return object
+     */
+    protected function dispatchEvent($eventName, $subject, $arguments = [])
+    {
+        if ($subject instanceof Event) {
+            $event = $subject;
+        } else {
+            $event = new Event($subject, $arguments);
+        }
+
+        return $this->getDispatcher()->dispatch($event, $eventName);
     }
 
     /**

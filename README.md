@@ -384,3 +384,64 @@ php artisan biz:scaffold user_token User DS
 1. 调整DaoImpl文件中的conditions字段数组，包括字段缩进、删除不必要的条件
 2. 调整ServiceImpl文件中的filterCreateUserTokenFields方法，按照实际情况修改$requiredFields和$default信息
 3. 调整ServiceImpl文件中的filterUpdateUserTokenFields方法，按照实际情况修改允许更新的$fields信息 
+
+# 事件派遣的使用
+
+- 自定义自己的MyEventSubscriber
+
+```php
+namespace Biz\Service\Event
+  
+use Zler\Biz\Event\EventSubscriber;
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+
+class MyEventSubscriber extends EventSubscriber implements EventSubscriberInterface
+{
+    public static function getSubscribedEvents()
+    {
+        return [
+            'review.create' => 'onReviewChange',
+            'review.update' => 'onReviewChange',
+            'review.delete' => 'onReviewChange',
+        ];
+    }
+
+    public function onReviewChange(Event $event)
+    {
+        $review = $event->getSubject();
+
+        if ('course' == $review['targetType']) {
+            $course = $this->getCourseService()->getCourse($review['targetId']);
+            $this->getCourseSetService()->updateCourseSetStatistics($course['courseSetId'], [
+                'ratingNum',
+            ]);
+        }
+    }
+
+    /**
+     * @return CourseService
+     */
+    protected function getCourseService()
+    {
+        return $this->getBiz()->service('Course:CourseService');
+    }
+
+    /**
+     * @return CourseSetService
+     */
+    protected function getCourseSetService()
+    {
+        return $this->getBiz()->service('Course:CourseSetService');
+    }
+}
+
+/*
+    user_user_event_subscriber:
+        class: Biz\User\Event\UserEventSubscriber
+        arguments: ['@biz']
+        public: true
+        tags:
+            - { name: codeages_plugin.event.subscriber }
+*/
+```
+

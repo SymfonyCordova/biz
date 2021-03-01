@@ -6,6 +6,7 @@ namespace Zler\Biz\Context;
 
 use Pimple\Container;
 use Pimple\ServiceProviderInterface;
+use Symfony\Component\EventDispatcher\EventDispatcher;
 use Zler\Biz\Dao\DaoProxy;
 use Zler\Biz\Dao\FieldSerializer;
 
@@ -50,6 +51,10 @@ class Biz extends Container
                     'dao' => $biz['autoload.object_maker.dao'],
                 )
             );
+        };
+
+        $this['dispatcher'] = function () {
+            return new EventDispatcher();
         };
 
         foreach ($values as $key => $value) {
