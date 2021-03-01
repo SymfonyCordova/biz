@@ -32,6 +32,12 @@ class LaravelServiceProvider extends ServiceProvider implements DeferrableProvid
      */
     public function boot()
     {
+        foreach ($this->app->tagged('zler.event.subscriber') as $tag){
+            $biz = $this->app->make(Biz::class);
+            $dispatcher = $biz['dispatcher'];
+            $dispatcher->addSubscriber($tag);
+        }
+
         $this->publishes([
             __DIR__ . '/../config/zler-biz.php' => config_path('zler-biz.php'),
         ]);
