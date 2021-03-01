@@ -26,4 +26,9 @@ abstract class EventSubscriber implements EventSubscriberInterface
     {
         return $this->biz;
     }
+
+    protected function createService($alias)
+    {
+        return $this->getBiz()->service($alias);
+    }
 }

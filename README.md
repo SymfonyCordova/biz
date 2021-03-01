@@ -394,6 +394,7 @@ namespace Biz\Service\Event
   
 use Zler\Biz\Event\EventSubscriber;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Zler\Biz\Event\Event;
 
 class MyEventSubscriber extends EventSubscriber implements EventSubscriberInterface
 {
