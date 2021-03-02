@@ -19,7 +19,6 @@ class LaravelServiceProvider extends ServiceProvider implements DeferrableProvid
     {
         $this->app->singleton(Biz::class , function ($app) {
             $biz = new Biz(config('zler-biz.options'));
-            $biz['migration.directories'][] = dirname(__DIR__).'/migrations';
             $biz->register(new DoctrineServiceProvider());
             return $biz;
         });
