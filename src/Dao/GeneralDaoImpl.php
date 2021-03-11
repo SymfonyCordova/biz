@@ -196,7 +196,7 @@ abstract class GeneralDaoImpl implements GeneralDaoInterface
         }
     }
 
-    private function createDaoException($message = '', $code = 0)
+    protected function createDaoException($message = '', $code = 0)
     {
         return new DaoException($message, $code);
     }
