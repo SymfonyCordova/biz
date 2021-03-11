@@ -200,4 +200,9 @@ abstract class GeneralDaoImpl implements GeneralDaoInterface
     {
         return new DaoException($message, $code);
     }
+
+    protected function createDao($alias)
+    {
+        return $this->biz->dao($alias);
+    }
 }
