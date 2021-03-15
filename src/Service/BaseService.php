@@ -34,6 +34,11 @@ abstract class BaseService
         return $this->getBiz()->service($alias);
     }
 
+    protected function createApiServiceException($message="Service Exception", $code=500)
+    {
+        return new ServiceException($message, $code);
+    }
+
     protected function createServiceException($message = 'Service Exception')
     {
         return new ServiceException($message);
