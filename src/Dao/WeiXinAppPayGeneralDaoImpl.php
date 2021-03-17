@@ -14,9 +14,4 @@ abstract class WeiXinAppPayGeneralDaoImpl implements WeiXinAppPayGeneralDaoInter
     {
         $this->biz = $biz;
     }
-
-    public function unifiedOrder(array $fields)
-    {
-
-    }
 }
