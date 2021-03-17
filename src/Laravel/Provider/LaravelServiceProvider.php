@@ -7,6 +7,7 @@ use Illuminate\Support\ServiceProvider;
 use Illuminate\Contracts\Support\DeferrableProvider;
 use Zler\Biz\Context\Biz;
 use Zler\Biz\Provider\DoctrineServiceProvider;
+use Zler\Biz\Provider\WeChatPayGuzzleMiddlewareServiceProvider;
 
 class LaravelServiceProvider extends ServiceProvider implements DeferrableProvider
 {
@@ -20,6 +21,7 @@ class LaravelServiceProvider extends ServiceProvider implements DeferrableProvid
         $this->app->singleton(Biz::class , function ($app) {
             $biz = new Biz(config('zler-biz.options'));
             $biz->register(new DoctrineServiceProvider());
+            $biz->register(new WeChatPayGuzzleMiddlewareServiceProvider());
             return $biz;
         });
     }
