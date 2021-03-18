@@ -69,11 +69,11 @@ class AlipayEasySdkServiceProvider implements ServiceProviderInterface
                 $options->alipayCertPath = $alipayOptions['alipayCertPath'];
                 $options->alipayRootCertPath = $alipayOptions['alipayRootCertPath'];
                 $options->merchantCertPath = $alipayOptions['merchantCertPath'];
-                
+
             }elseif ($alipayOptions['alipayPublicKey']){
                 $options->alipayPublicKey = $alipayOptions['alipayPublicKey'];
             }else{
-                throw new AccessDeniedException('未知模式, 既不是CSR模式也不是RSA模式');
+                return new Config();
             }
 
             $options->notifyUrl = $alipayOptions['notifyUrl'];
