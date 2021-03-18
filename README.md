@@ -469,4 +469,30 @@ class MyEventSubscriber extends EventSubscriber implements EventSubscriberInterf
   $this->dispatchEvent('user.create', new Event($created));
   ```
 
-  
+
+# 集成微信支付
+
+## 1.注册 WeChatPayGuzzleMiddlewareServiceProvider
+
+```php
+$biz = new Biz(config('zler-biz.options'));
+$biz->register(new DoctrineServiceProvider());
+$biz->register(new WeChatPayGuzzleMiddlewareServiceProvider());
+```
+
+## 2.下载微信支付平台证书
+
+```shell
+php  vendor/wechatpay/wechatpay-guzzle-middleware/tool/CertificateDownloader.php -k ${apiV3key} -m ${mchId} -f ${mchPrivateKeyFilePath} -s ${mchSerialNo} -o ${outputFilePath} -c ${wechatpayCertificateFilePath}
+
+# 例如:
+php  vendor/wechatpay/wechatpay-guzzle-middleware/tool/CertificateDownloader.php -k ApiV3Key  -m 1607303263 -f /d/project/laravel-friend/cert/wechat/pay/apiclient_key.pem -s 3A056802A1C8F790089A12A9691C0F54D339994C -o /d/project/laravel-friend/cert/wechat/pay/wechatPay_cert  -c /d/project/laravel-friend/cert/wechat/pay/wechatPay_cert
+```
+
+- 说明
+
+  - # [cURL error 60: SSL certificate problem: unable to get local issuer certificate
+
+  - 解决方法下载 http://curl.haxx.se/ca/cacert.pem
+
+  - php.ini 增加 curl.cainfo =D:\xiaxia\anan\php\cacert.pem

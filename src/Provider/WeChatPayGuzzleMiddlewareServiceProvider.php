@@ -51,7 +51,7 @@ class WeChatPayGuzzleMiddlewareServiceProvider implements ServiceProviderInterfa
             //商户相关配置
             $merchantId = $wechatPayOptions['merchant_id'];// 商户号
             $merchantSerialNumber = $wechatPayOptions['merchant_serial_number'];//商户API证书序列号
-            $merchantPrivateKey = PemUtil::loadPrivateKey($wechatPayOptions['merchant_private_key_path']);//商户私钥
+            $merchantPrivateKey = PemUtil::loadPrivateKey($wechatPayOptions['merchant_private_key_path']);//商户aip证书私钥
             //微信支付平台配置
             $wechatPayCertificate = PemUtil::loadCertificate($wechatPayOptions['wechat_pay_certificate_path']);//微信支付平台证书
 
