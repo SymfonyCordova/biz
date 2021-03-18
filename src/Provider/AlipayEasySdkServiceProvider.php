@@ -73,7 +73,7 @@ class AlipayEasySdkServiceProvider implements ServiceProviderInterface
             }elseif ($alipayOptions['alipayPublicKey']){
                 $options->alipayPublicKey = $alipayOptions['alipayPublicKey'];
             }else{
-                return new Config();
+                return null;
             }
 
             $options->notifyUrl = $alipayOptions['notifyUrl'];
@@ -83,6 +83,9 @@ class AlipayEasySdkServiceProvider implements ServiceProviderInterface
         };
 
         $app['alipay.easy.factory'] = function ($app){
+            if($app['alipay.easy.options'] === null){
+                throw new AccessDeniedException('csr or rsa is null');
+            }
             return Factory::setOptions($app['alipay.easy.options']);
         };
     }
