@@ -26,7 +26,8 @@
         "davedevelopment/phpmig": "^1.7",
         "symfony/event-dispatcher": "^5.2",
         "guzzlehttp/guzzle": "^7.2",
-        "wechatpay/wechatpay-guzzle-middleware": "^0.2.0"
+        "wechatpay/wechatpay-guzzle-middleware": "^0.2.0",
+        "alipaysdk/easysdk": "^2.2"
     },
     "require-dev": {
         "symfony/doctrine-bridge": "^5.2"

@@ -16,5 +16,19 @@ return [
              'merchant_private_key_path' => env('MERCHANT_PRIVATE_KEY_PATH', ''), //商户私钥
              'wechat_pay_certificate_path' => env('WECHAT_PAY_CERTIFICATE_PATH', ''), //微信支付平台证书
         ],
+         'alipay.options' => [
+             'protocol' => 'https',
+             'gatewayHost' => 'openapi.alipay.com',
+             'signType' => 'RSA2',
+             'appId' => env('ALIPAY_APP_ID', ''),
+             'merchantPrivateKey' => env('ALIPAY_APP_PRIVATE_KEY', ''), //应用私钥 MIIEvQIBADANB
+             'alipayCertPath' => env('ALIPAY_CERT_PATH', ''),  //支付宝公钥证书文件路径 /foo/alipayCertPublicKey_RSA2.crt
+             'alipayRootCertPath' => env('ALIPAY_ROOT_CERT_PATH',''), //支付宝根证书文件路径 /foo/alipayRootCert.crt
+             'merchantCertPath' => env('ALIPAY_APP_PUBLISH_CERT_PATH',''), //应用公钥证书文件路径 /foo/appCertPublicKey_2019051064521003.crt
+             //如果采用非证书模式，则无需赋值上面的三个证书路径，改为赋值如下的支付宝公钥字符串即可
+             'alipayPublicKey' => env('ALIPAY_PUBLISH_KEY'), //支付宝公钥 MIIBIjANBg
+             'notifyUrl' => '', //异步通知接收服务地址
+             'encryptKey' => '', //可设置AES密钥
+         ],
     ]
 ];
