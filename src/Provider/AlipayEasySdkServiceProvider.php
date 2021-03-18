@@ -8,6 +8,7 @@ use Alipay\EasySDK\Kernel\Config;
 use Alipay\EasySDK\Kernel\Factory;
 use Pimple\Container;
 use Pimple\ServiceProviderInterface;
+use Zler\Biz\Service\Exception\AccessDeniedException;
 
 class AlipayEasySdkServiceProvider implements ServiceProviderInterface
 {
@@ -52,18 +53,29 @@ class AlipayEasySdkServiceProvider implements ServiceProviderInterface
         $app['alipay.easy.options'] = function ($app){
             $app['alipay.options.initializer']();
 
+            $alipayOptions=$app['alipay.options'];
+
             $options = new Config();
-            $options->protocol = $app['protocol'];
-            $options->gatewayHost = $app['gatewayHost'];
-            $options->signType = $app['signType'];
-            $options->appId = $app['appId'];
-            $options->merchantPrivateKey = $app['merchantPrivateKey'];
-            $options->alipayCertPath = $app['alipayCertPath'];
-            $options->alipayRootCertPath = $app['alipayRootCertPath'];
-            $options->merchantCertPath = $app['merchantCertPath'];
-            $options->alipayPublicKey = $app['alipayPublicKey'];
-            $options->notifyUrl = $app['notifyUrl'];
-            $options->encryptKey = $app['encryptKey'];
+            $options->protocol = $alipayOptions['protocol'];
+            $options->gatewayHost = $alipayOptions['gatewayHost'];
+            $options->signType = $alipayOptions['signType'];
+            $options->appId = $alipayOptions['appId'];
+            $options->merchantPrivateKey = $alipayOptions['merchantPrivateKey'];
+
+            if($alipayOptions['alipayCertPath']&&
+                $alipayOptions['alipayRootCertPath']&&
+                $alipayOptions['merchantCertPath']){
+                $options->alipayCertPath = $alipayOptions['alipayCertPath'];
+                $options->alipayRootCertPath = $alipayOptions['alipayRootCertPath'];
+                $options->merchantCertPath = $alipayOptions['merchantCertPath'];
+            }elseif ($alipayOptions['alipayPublicKey']){
+                $options->alipayPublicKey = $alipayOptions['alipayPublicKey'];
+            }else{
+                throw new AccessDeniedException('未知模式, 既不是CSR模式也不是RSA模式');
+            }
+
+            $options->notifyUrl = $alipayOptions['notifyUrl'];
+            $options->encryptKey = $alipayOptions['encryptKey'];
 
             return $options;
         };
