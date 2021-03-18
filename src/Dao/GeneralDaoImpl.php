@@ -153,7 +153,7 @@ abstract class GeneralDaoImpl implements GeneralDaoInterface
         return $this->db()->fetchAll($sql, array_values($fields));
     }
 
-    public function findAll($conditions)
+    public function findAll(array $conditions=array())
     {
         $builder = $this->createQueryBuilder($conditions)->select('*');
 
