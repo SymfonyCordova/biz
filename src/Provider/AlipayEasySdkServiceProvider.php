@@ -65,9 +65,11 @@ class AlipayEasySdkServiceProvider implements ServiceProviderInterface
             if($alipayOptions['alipayCertPath']&&
                 $alipayOptions['alipayRootCertPath']&&
                 $alipayOptions['merchantCertPath']){
+
                 $options->alipayCertPath = $alipayOptions['alipayCertPath'];
                 $options->alipayRootCertPath = $alipayOptions['alipayRootCertPath'];
                 $options->merchantCertPath = $alipayOptions['merchantCertPath'];
+                
             }elseif ($alipayOptions['alipayPublicKey']){
                 $options->alipayPublicKey = $alipayOptions['alipayPublicKey'];
             }else{
