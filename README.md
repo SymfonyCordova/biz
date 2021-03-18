@@ -475,8 +475,6 @@ class MyEventSubscriber extends EventSubscriber implements EventSubscriberInterf
 ## 1.注册 WeChatPayGuzzleMiddlewareServiceProvider
 
 ```php
-$biz = new Biz(config('zler-biz.options'));
-$biz->register(new DoctrineServiceProvider());
 $biz->register(new WeChatPayGuzzleMiddlewareServiceProvider());
 ```
 
@@ -498,3 +496,14 @@ php  vendor/wechatpay/wechatpay-guzzle-middleware/tool/CertificateDownloader.php
   - 解决方法下载 http://curl.haxx.se/ca/cacert.pem
 
   - php.ini 增加 curl.cainfo =D:\xiaxia\anan\php\cacert.pem
+
+# 集成阿里支付
+
+## 注册 AlipayEasySdkServiceProvider
+
+```php
+$biz->register(new AlipayEasySdkServiceProvider());
+```
+
+
+
