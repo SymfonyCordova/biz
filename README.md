@@ -486,9 +486,9 @@ $biz->register(new WeChatPayGuzzleMiddlewareServiceProvider());
 php  vendor/wechatpay/wechatpay-guzzle-middleware/tool/CertificateDownloader.php -k ${apiV3key} -m ${mchId} -f ${mchPrivateKeyFilePath} -s ${mchSerialNo} -o ${outputFilePath} -c ${wechatpayCertificateFilePath}
 
 #为了避免死循环第一次下载不带-c
-php  vendor/wechatpay/wechatpay-guzzle-middleware/tool/CertificateDownloader.php -k YPUixd4oG2ZMzi7zos1JVf4CIXem7GhP  -m 1607303263 -f /d/project/laravel-friend/cert/wechat/pay/apiclient_key.pem -s 3A056802A1C8F790089A12A9691C0F54D339994C -o /d/project/laravel-friend/cert/wechat/pay
+php  vendor/wechatpay/wechatpay-guzzle-middleware/tool/CertificateDownloader.php -k YPUixd4oG99Mzi7zos1JVf4CIXem7GhP  -m 1602203263 -f /d/project/laravel-friend/cert/wechat/pay/apiclient_key.pem -s 37056802A1C8F790089A12A9691C0F54D339994D -o /d/project/laravel-friend/cert/wechat/pay
 #之后每次更新证书 例如:
-php  vendor/wechatpay/wechatpay-guzzle-middleware/tool/CertificateDownloader.php -k YPUixd4oG2ZMzi7zos1JVf4CIXem7GhP  -m 1607303263 -f /d/project/laravel-friend/cert/wechat/pay/apiclient_key.pem -s 3A056802A1C8F790089A12A9691C0F54D339994C -o /d/project/laravel-friend/cert/wechat/pay  -c /d/project/laravel-friend/cert/wechat/pay/wechatpay_5EAD5D08C3B742CFB5BD0B80722D3D7209CA87F3.pem
+php  vendor/wechatpay/wechatpay-guzzle-middleware/tool/CertificateDownloader.php -k YPUixd4oG99Mzi7zos1JVf4CIXem7GhP  -m 1602203263 -f /d/project/laravel-friend/cert/wechat/pay/apiclient_key.pem -s 37056802A1C8F790089A12A9691C0F54D339994D -o /d/project/laravel-friend/cert/wechat/pay  -c /d/project/laravel-friend/cert/wechat/pay/wechatpay_5EAD5D08C3B742CFB5BD0B80722D3D7209CA87F3.pem
 ```
 
 - 说明
