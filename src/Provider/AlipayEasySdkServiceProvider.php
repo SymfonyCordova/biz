@@ -12,7 +12,7 @@ use Zler\Biz\Service\Exception\AccessDeniedException;
 
 class AlipayEasySdkServiceProvider implements ServiceProviderInterface
 {
-    public function register(Container $pimple)
+    public function register(Container $app)
     {
         $app['alipay.default_options'] = [
             'protocol' => 'https',
