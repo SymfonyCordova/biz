@@ -6,6 +6,7 @@ namespace Zler\Biz\Laravel\Provider;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Contracts\Support\DeferrableProvider;
 use Zler\Biz\Context\Biz;
+use Zler\Biz\Provider\AlipayEasySdkServiceProvider;
 use Zler\Biz\Provider\DoctrineServiceProvider;
 use Zler\Biz\Provider\WeChatPayGuzzleMiddlewareServiceProvider;
 
@@ -22,6 +23,7 @@ class LaravelServiceProvider extends ServiceProvider implements DeferrableProvid
             $biz = new Biz(config('zler-biz.options'));
             $biz->register(new DoctrineServiceProvider());
             $biz->register(new WeChatPayGuzzleMiddlewareServiceProvider());
+            $biz->register(new AlipayEasySdkServiceProvider());
             return $biz;
         });
     }
