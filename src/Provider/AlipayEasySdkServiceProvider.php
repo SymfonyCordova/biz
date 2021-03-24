@@ -42,12 +42,7 @@ class AlipayEasySdkServiceProvider implements ServiceProviderInterface
                 $app['alipay.options'] = $app['alipay.default_options'];
             }
 
-            $tmp = $app['alipay.options'];
-            foreach ($tmp as $name => &$options) {
-                $options = array_replace($app['alipay.default_options'], $options);
-            }
-
-            $app['alipay.options'] = $tmp;
+            $app['alipay.options'] = array_replace($app['alipay.default_options'], $app['alipay.options']);
         });
 
         $app['alipay.easy.options'] = function ($app){
