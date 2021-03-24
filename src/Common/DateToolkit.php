@@ -33,6 +33,27 @@ class DateToolkit
         return strtotime($zeroStr);
     }
 
+    /**
+     * 用开始时间和结束时间计算中间的每一天的日期
+     * @param $beginTime
+     * @param $endTime
+     * @return array
+     */
+    public static function createEachDays($beginTime, $endTime)
+    {
+        $arr = [];
+
+        $beginTime = self::getZeroClockTimes($beginTime);
+        $endTime   = self::getZeroClockTimes($endTime);
+
+        while ($beginTime <= $endTime){
+            $arr[] = date('Ymd',$beginTime);
+            $beginTime = strtotime('+1 day',$beginTime);
+        }
+
+        return $arr;
+    }
+
     public static function periodTimes($timestamps, $day){
         $d = date('d', $timestamps);
         $temp = strtotime(date("Y-m", $timestamps));
