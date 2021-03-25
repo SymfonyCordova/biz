@@ -72,7 +72,7 @@ abstract class GeneralDaoImpl implements GeneralDaoInterface
 
     public function get($id, $lock = false)
     {
-        $sql = "SELECT * FROM {$this->table()} WHERE id = ?".($lock ? ' FOR UPDATE' : '');
+        $sql = "SELECT * FROM `{$this->table()}` WHERE id = ?".($lock ? ' FOR UPDATE' : '');
 
         return $this->db()->fetchAssoc($sql, array($id)) ?: null;
     }
