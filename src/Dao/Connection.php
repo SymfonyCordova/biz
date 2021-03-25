@@ -4,6 +4,9 @@
 namespace Zler\Biz\Dao;
 
 use Doctrine\DBAL\Connection as DoctrineConnection;
+use Doctrine\DBAL\Exception;
+use Doctrine\DBAL\ParameterType;
+use Doctrine\DBAL\Types\Type;
 
 class Connection extends DoctrineConnection
 {
@@ -20,7 +23,63 @@ class Connection extends DoctrineConnection
 
         $data = $this->addBackSlash($data);
 
-        return parent::insert($tableExpression, $data, $types);
+        return $this->parentInsert($tableExpression, $data, $types);
+    }
+
+    /**
+     * Inserts a table row with specified data.
+     *
+     * Table expression and columns are not escaped and are not safe for user-input.
+     *
+     * @param string                                                               $table Table name
+     * @param array<string, mixed>                                                 $data  Column-value pairs
+     * @param array<int, int|string|Type|null>|array<string, int|string|Type|null> $types Parameter types
+     *
+     * @return int The number of affected rows.
+     *
+     * @throws Exception
+     */
+    public function parentInsert($table, array $data, array $types = [])
+    {
+        if (empty($data)) {
+            return $this->executeStatement('INSERT INTO `' . $table . '` () VALUES ()');
+        }
+
+        $columns = [];
+        $values  = [];
+        $set     = [];
+
+        foreach ($data as $columnName => $value) {
+            $columns[] = $columnName;
+            $values[]  = $value;
+            $set[]     = '?';
+        }
+
+        return $this->executeStatement(
+            'INSERT INTO `' . $table . '` (' . implode(', ', $columns) . ')' .
+            ' VALUES (' . implode(', ', $set) . ')',
+            $values,
+            is_string(key($types)) ? $this->extractTypeValues($columns, $types) : $types
+        );
+    }
+
+    /**
+     * Extract ordered type list from an ordered column list and type map.
+     *
+     * @param array<int, string>                                                   $columnList
+     * @param array<int, int|string|Type|null>|array<string, int|string|Type|null> $types
+     *
+     * @return array<int, int|string|Type|null>|array<string, int|string|Type|null>
+     */
+    private function extractTypeValues(array $columnList, array $types)
+    {
+        $typeValues = [];
+
+        foreach ($columnList as $columnIndex => $columnName) {
+            $typeValues[] = $types[$columnName] ?? ParameterType::STRING;
+        }
+
+        return $typeValues;
     }
 
     public function addBackSlash($data)
