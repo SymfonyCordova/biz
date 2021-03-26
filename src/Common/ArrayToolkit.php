@@ -287,4 +287,22 @@ class ArrayToolkit
         }
         return $res;
     }
+
+    public static function same(array $array, $value)
+    {
+        $same = array();
+
+        if(empty($same)){
+            return $same;
+        }
+
+        foreach ($array as $item){
+            if(!in_array($value, $item)){
+                continue;
+            }
+            $same[] = $item;
+        }
+
+        return $same;
+    }
 }
