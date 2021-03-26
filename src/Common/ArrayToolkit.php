@@ -292,7 +292,7 @@ class ArrayToolkit
     {
         $same = array();
 
-        if(empty($same)){
+        if(empty($array)){
             return $same;
         }
 
