@@ -305,4 +305,22 @@ class ArrayToolkit
 
         return $same;
     }
+
+    public static function sum(array $array, $key)
+    {
+        $sum = 0;
+
+        if(empty($array)) {
+            return $sum;
+        }
+
+        foreach ($array as $item){
+            if(!is_numeric($item[$key])){
+                return $sum += 0;
+            }
+            $sum += $item[$key];
+        }
+
+        return $sum;
+    }
 }
