@@ -297,7 +297,7 @@ class ArrayToolkit
         }
 
         foreach ($array as $item){
-            if(!in_array($value, $item)){
+            if(!in_array($value, array_values($item))){
                 continue;
             }
             $same[] = $item;
