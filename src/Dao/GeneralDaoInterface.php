@@ -18,6 +18,8 @@ interface GeneralDaoInterface extends DaoInterface
 
     public function count($conditions);
 
+    public function sum($conditions, $column);
+
     public function wave(array $ids, array $diffs);
 
     public function table();

@@ -106,6 +106,14 @@ abstract class GeneralDaoImpl implements GeneralDaoInterface
         return intval($builder->execute()->fetchColumn(0));
     }
 
+    public function sum($conditions, $column)
+    {
+        $builder = $this->createQueryBuilder($conditions)
+            ->select('SUM(`'. $column .'`)');
+
+        return intval($builder->execute()->fetchColumn(0));
+    }
+
     public function table()
     {
         return $this->table;
