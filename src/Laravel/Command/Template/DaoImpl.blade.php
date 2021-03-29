@@ -1,10 +1,10 @@
 {!! $phpStart !!}
 namespace Biz\{{$moduleName}}\Dao\Impl;
 
-use Zler\Biz\Dao\GeneralDaoImpl;
+use Zler\Biz\Dao\AdvancedDaoImpl;
 use Biz\{{$moduleName}}\Dao\{{$bigName}}Dao;
 
-class {{$bigName}}DaoImpl extends GeneralDaoImpl implements {{$bigName}}Dao
+class {{$bigName}}DaoImpl extends AdvancedDaoImpl implements {{$bigName}}Dao
 {
     protected $table = "{{$tableName}}";
 
