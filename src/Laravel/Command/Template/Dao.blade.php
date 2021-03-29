@@ -6,5 +6,7 @@ use Zler\Biz\Dao\AdvancedDaoInterface;
 interface {{$bigName}}Dao extends AdvancedDaoInterface
 {
     public function findByIds($ids);
+
+    public function findAll(array $conditions=array());
 }
 
