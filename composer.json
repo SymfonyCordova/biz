@@ -27,7 +27,8 @@
         "symfony/event-dispatcher": "^5.2",
         "guzzlehttp/guzzle": "^7.2",
         "wechatpay/wechatpay-guzzle-middleware": "^0.2.0",
-        "alipaysdk/easysdk": "^2.2"
+        "alipaysdk/easysdk": "^2.2",
+        "alibabacloud/client": "^1.5"
     },
     "require-dev": {
         "symfony/doctrine-bridge": "^5.2"

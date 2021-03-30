@@ -30,5 +30,10 @@ return [
              'notifyUrl' => '', //异步通知接收服务地址
              'encryptKey' => '', //可设置AES密钥
          ],
+         'alibaba.cloud.client.options' => [
+             'accessKeyId' => env('ALIBABA_CLOUD_ACCESS_KEY_ID', ''),
+             'accessKeySecret' => env('ALIBABA_CLOUD_ACCESS_KEY_SECRET', ''),
+             'regionId' => env('ALIBABA_CLOUD_REGION_ID', ''),
+         ],
     ]
 ];

@@ -505,5 +505,13 @@ php  vendor/wechatpay/wechatpay-guzzle-middleware/tool/CertificateDownloader.php
 $biz->register(new AlipayEasySdkServiceProvider());
 ```
 
+# 集成阿里云客户端
 
+## 注册AlibabaCloudClientProvider
+
+```php
+$biz->register(new AlibabaCloudClientProvider());
+```
+
+- 详细的调用参考 https://next.api.aliyun.com/home 在此网站搜索对应的业务调用
 
