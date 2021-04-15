@@ -47,14 +47,14 @@ abstract class GeneralDaoImpl implements GeneralDaoInterface
             $fields[$timestampField] = time();
         }
 
-        $this->db()->update($this->table, $fields, array('id' => $id));
+        $this->db()->update("`{$this->table}`", $fields, array('id' => $id));
 
         return $this->get($id);
     }
 
     public function delete($id)
     {
-        return $this->db()->delete($this->table(), array('id' => $id));
+        return $this->db()->delete("`{$this->table()}`", array('id' => $id));
     }
 
     public function wave(array $ids, array $diffs)
@@ -65,7 +65,7 @@ abstract class GeneralDaoImpl implements GeneralDaoInterface
 
         $marks = str_repeat('?,', count($ids) - 1).'?';
 
-        $sql = "UPDATE {$this->table()} SET ".implode(', ', $sets)." WHERE id IN ($marks)";
+        $sql = "UPDATE `{$this->table()}` SET ".implode(', ', $sets)." WHERE id IN ($marks)";
 
         return $this->db()->executeUpdate($sql, array_merge(array_values($diffs), $ids));
     }
@@ -145,7 +145,7 @@ abstract class GeneralDaoImpl implements GeneralDaoInterface
         }
 
         $marks = str_repeat('?,', count($values) - 1).'?';
-        $sql = "SELECT * FROM {$this->table} WHERE {$field} IN ({$marks});";
+        $sql = "SELECT * FROM `{$this->table}` WHERE {$field} IN ({$marks});";
 
         return $this->db()->fetchAll($sql, $values);
     }
@@ -156,7 +156,7 @@ abstract class GeneralDaoImpl implements GeneralDaoInterface
             return "{$name} = ?";
         }, array_keys($fields));
 
-        $sql = "SELECT * FROM {$this->table()} WHERE ".implode(' AND ', $placeholders);
+        $sql = "SELECT * FROM `{$this->table()}` WHERE ".implode(' AND ', $placeholders);
 
         return $this->db()->fetchAll($sql, array_values($fields));
     }
