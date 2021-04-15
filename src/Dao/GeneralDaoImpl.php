@@ -133,7 +133,7 @@ abstract class GeneralDaoImpl implements GeneralDaoInterface
             return "{$name} = ?";
         }, array_keys($fields));
 
-        $sql = "SELECT * FROM {$this->table()} WHERE ".implode(' AND ', $placeholders);
+        $sql = "SELECT * FROM `{$this->table()}` WHERE ".implode(' AND ', $placeholders);
 
         return $this->db()->fetchAssoc($sql, array_values($fields)) ?: null;
     }
